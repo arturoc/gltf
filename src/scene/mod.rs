@@ -13,19 +13,19 @@ pub enum Transform {
     /// 4x4 transformation matrix in column-major order.
     Matrix {
         /// 4x4 matrix.
-        matrix: [[f32; 4]; 4],
+        matrix: [[f64; 4]; 4],
     },
 
     /// Decomposed TRS properties.
     Decomposed {
         /// `[x, y, z]` vector.
-        translation: [f32; 3],
+        translation: [f64; 3],
 
         /// `[x, y, z, w]` quaternion, where `w` is the scalar.
-        rotation: [f32; 4],
+        rotation: [f64; 4],
 
         /// `[x, y, z]` vector.
-        scale: [f32; 3],
+        scale: [f64; 3],
     },
 }
 
@@ -34,7 +34,7 @@ impl Transform {
     ///
     /// If the transform is `Decomposed`, then the matrix is generated with the
     /// equation `matrix = translation * rotation * scale`.
-    pub fn matrix(self) -> [[f32; 4]; 4] {
+    pub fn matrix(self) -> [[f64; 4]; 4] {
         match self {
             Transform::Matrix { matrix } => matrix,
             Transform::Decomposed {
@@ -54,7 +54,7 @@ impl Transform {
     ///
     /// If the transform is `Matrix`, then the decomposition is extracted from the
     /// matrix.
-    pub fn decomposed(self) -> ([f32; 3], [f32; 4], [f32; 3]) {
+    pub fn decomposed(self) -> ([f64; 3], [f64; 4], [f64; 3]) {
         match self {
             Transform::Matrix { matrix: m } => {
                 let translation = [m[3][0], m[3][1], m[3][2]];
@@ -285,14 +285,14 @@ impl<'a> Scene<'a> {
 mod tests {
     use crate::math::*;
     use crate::scene::Transform;
-    use std::f32::consts::PI;
+    use std::f64::consts::PI;
 
-    fn rotate(x: f32, y: f32, z: f32, r: f32) -> [f32; 4] {
+    fn rotate(x: f64, y: f64, z: f64, r: f64) -> [f64; 4] {
         let r = Quaternion::from_axis_angle(Vector3::new(x, y, z).normalize(), r);
         [r.v.x, r.v.y, r.v.z, r.s]
     }
 
-    fn test_decompose(translation: [f32; 3], rotation: [f32; 4], scale: [f32; 3]) {
+    fn test_decompose(translation: [f64; 3], rotation: [f64; 4], scale: [f64; 3]) {
         let matrix = Transform::Decomposed {
             translation,
             rotation,
@@ -313,19 +313,19 @@ mod tests {
         );
     }
 
-    fn test_decompose_rotation(rotation: [f32; 4]) {
+    fn test_decompose_rotation(rotation: [f64; 4]) {
         let translation = [1.0, -2.0, 3.0];
         let scale = [1.0, 1.0, 1.0];
         test_decompose(translation, rotation, scale);
     }
 
-    fn test_decompose_scale(scale: [f32; 3]) {
+    fn test_decompose_scale(scale: [f64; 3]) {
         let translation = [1.0, 2.0, 3.0];
         let rotation = rotate(1.0, 0.0, 0.0, PI / 2.0);
         test_decompose(translation, rotation, scale);
     }
 
-    fn test_decompose_translation(translation: [f32; 3]) {
+    fn test_decompose_translation(translation: [f64; 3]) {
         let rotation = [0.0, 0.0, 0.0, 1.0];
         let scale = [1.0, 1.0, 1.0];
         test_decompose(translation, rotation, scale);

@@ -44,7 +44,7 @@ pub struct Node {
     ///       serialization, if the node is targeted for animation.
     ///
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub matrix: Option<[f32; 16]>,
+    pub matrix: Option<[f64; 16]>,
 
     /// The index of the mesh in this node.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -62,11 +62,11 @@ pub struct Node {
 
     /// The node's non-uniform scale.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub scale: Option<[f32; 3]>,
+    pub scale: Option<[f64; 3]>,
 
     /// The node's translation.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub translation: Option<[f32; 3]>,
+    pub translation: Option<[f64; 3]>,
 
     /// The index of the skin referenced by this node.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -103,7 +103,7 @@ pub struct Scene {
 
 /// Unit quaternion rotation in the order (x, y, z, w), where w is the scalar.
 #[derive(Clone, Copy, Debug, Deserialize, Serialize)]
-pub struct UnitQuaternion(pub [f32; 4]);
+pub struct UnitQuaternion(pub [f64; 4]);
 
 impl Default for UnitQuaternion {
     fn default() -> Self {

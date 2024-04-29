@@ -21,49 +21,49 @@ mod test {
     use super::*;
 
     impl approx::AbsDiffEq for Vector4 {
-        type Epsilon = f32;
-        fn default_epsilon() -> f32 {
-            f32::default_epsilon()
+        type Epsilon = f64;
+        fn default_epsilon() -> f64 {
+            f64::default_epsilon()
         }
 
         fn abs_diff_eq(&self, other: &Vector4, epsilon: Self::Epsilon) -> bool {
-            f32::abs_diff_eq(&self.x, &other.x, epsilon)
-                && f32::abs_diff_eq(&self.y, &other.y, epsilon)
-                && f32::abs_diff_eq(&self.z, &other.z, epsilon)
-                && f32::abs_diff_eq(&self.w, &other.w, epsilon)
+            f64::abs_diff_eq(&self.x, &other.x, epsilon)
+                && f64::abs_diff_eq(&self.y, &other.y, epsilon)
+                && f64::abs_diff_eq(&self.z, &other.z, epsilon)
+                && f64::abs_diff_eq(&self.w, &other.w, epsilon)
         }
     }
 
     impl approx::RelativeEq for Vector4 {
-        fn default_max_relative() -> f32 {
-            f32::default_max_relative()
+        fn default_max_relative() -> f64 {
+            f64::default_max_relative()
         }
 
-        fn relative_eq(&self, other: &Self, epsilon: f32, max_relative: f32) -> bool {
-            f32::relative_eq(&self.x, &other.x, epsilon, max_relative)
-                && f32::relative_eq(&self.y, &other.y, epsilon, max_relative)
-                && f32::relative_eq(&self.z, &other.z, epsilon, max_relative)
-                && f32::relative_eq(&self.w, &other.w, epsilon, max_relative)
+        fn relative_eq(&self, other: &Self, epsilon: f64, max_relative: f64) -> bool {
+            f64::relative_eq(&self.x, &other.x, epsilon, max_relative)
+                && f64::relative_eq(&self.y, &other.y, epsilon, max_relative)
+                && f64::relative_eq(&self.z, &other.z, epsilon, max_relative)
+                && f64::relative_eq(&self.w, &other.w, epsilon, max_relative)
         }
     }
 
     impl approx::UlpsEq for Vector4 {
         fn default_max_ulps() -> u32 {
-            f32::default_max_ulps()
+            f64::default_max_ulps()
         }
 
-        fn ulps_eq(&self, other: &Self, epsilon: f32, max_ulps: u32) -> bool {
-            f32::ulps_eq(&self.x, &other.x, epsilon, max_ulps)
-                && f32::ulps_eq(&self.y, &other.y, epsilon, max_ulps)
-                && f32::ulps_eq(&self.z, &other.z, epsilon, max_ulps)
-                && f32::ulps_eq(&self.w, &other.w, epsilon, max_ulps)
+        fn ulps_eq(&self, other: &Self, epsilon: f64, max_ulps: u32) -> bool {
+            f64::ulps_eq(&self.x, &other.x, epsilon, max_ulps)
+                && f64::ulps_eq(&self.y, &other.y, epsilon, max_ulps)
+                && f64::ulps_eq(&self.z, &other.z, epsilon, max_ulps)
+                && f64::ulps_eq(&self.w, &other.w, epsilon, max_ulps)
         }
     }
 
     impl approx::AbsDiffEq for Matrix4 {
-        type Epsilon = f32;
-        fn default_epsilon() -> f32 {
-            f32::default_epsilon()
+        type Epsilon = f64;
+        fn default_epsilon() -> f64 {
+            f64::default_epsilon()
         }
 
         fn abs_diff_eq(&self, other: &Matrix4, epsilon: Self::Epsilon) -> bool {
@@ -75,11 +75,11 @@ mod test {
     }
 
     impl approx::RelativeEq for Matrix4 {
-        fn default_max_relative() -> f32 {
-            f32::default_max_relative()
+        fn default_max_relative() -> f64 {
+            f64::default_max_relative()
         }
 
-        fn relative_eq(&self, other: &Self, epsilon: f32, max_relative: f32) -> bool {
+        fn relative_eq(&self, other: &Self, epsilon: f64, max_relative: f64) -> bool {
             Vector4::relative_eq(&self.x, &other.x, epsilon, max_relative)
                 && Vector4::relative_eq(&self.y, &other.y, epsilon, max_relative)
                 && Vector4::relative_eq(&self.z, &other.z, epsilon, max_relative)
@@ -89,10 +89,10 @@ mod test {
 
     impl approx::UlpsEq for Matrix4 {
         fn default_max_ulps() -> u32 {
-            f32::default_max_ulps()
+            f64::default_max_ulps()
         }
 
-        fn ulps_eq(&self, other: &Self, epsilon: f32, max_ulps: u32) -> bool {
+        fn ulps_eq(&self, other: &Self, epsilon: f64, max_ulps: u32) -> bool {
             Vector4::ulps_eq(&self.x, &other.x, epsilon, max_ulps)
                 && Vector4::ulps_eq(&self.y, &other.y, epsilon, max_ulps)
                 && Vector4::ulps_eq(&self.z, &other.z, epsilon, max_ulps)
@@ -104,21 +104,21 @@ mod test {
 #[derive(Copy, Clone, Debug, PartialEq)]
 #[repr(C)]
 pub struct Vector3 {
-    pub x: f32,
-    pub y: f32,
-    pub z: f32,
+    pub x: f64,
+    pub y: f64,
+    pub z: f64,
 }
 
 impl Vector3 {
-    pub fn new(x: f32, y: f32, z: f32) -> Self {
+    pub fn new(x: f64, y: f64, z: f64) -> Self {
         Vector3 { x, y, z }
     }
 
-    pub fn magnitude(&self) -> f32 {
+    pub fn magnitude(&self) -> f64 {
         (self.x * self.x + self.y * self.y + self.z * self.z).sqrt()
     }
 
-    pub fn multiply(&mut self, s: f32) {
+    pub fn multiply(&mut self, s: f64) {
         self.x *= s;
         self.y *= s;
         self.z *= s;
@@ -130,9 +130,9 @@ impl Vector3 {
     }
 }
 
-impl ops::Mul<f32> for Vector3 {
+impl ops::Mul<f64> for Vector3 {
     type Output = Vector3;
-    fn mul(mut self, rhs: f32) -> Self::Output {
+    fn mul(mut self, rhs: f64) -> Self::Output {
         self.multiply(rhs);
         self
     }
@@ -141,30 +141,30 @@ impl ops::Mul<f32> for Vector3 {
 #[derive(Copy, Clone, Debug, PartialEq)]
 #[repr(C)]
 pub struct Vector4 {
-    pub x: f32,
-    pub y: f32,
-    pub z: f32,
-    pub w: f32,
+    pub x: f64,
+    pub y: f64,
+    pub z: f64,
+    pub w: f64,
 }
 
 impl Vector4 {
-    pub fn new(x: f32, y: f32, z: f32, w: f32) -> Self {
+    pub fn new(x: f64, y: f64, z: f64, w: f64) -> Self {
         Vector4 { x, y, z, w }
     }
 
-    pub fn multiply(&mut self, s: f32) {
+    pub fn multiply(&mut self, s: f64) {
         self.x *= s;
         self.y *= s;
         self.z *= s;
         self.w *= s;
     }
 
-    pub fn as_array(&self) -> [f32; 4] {
+    pub fn as_array(&self) -> [f64; 4] {
         [self.x, self.y, self.z, self.w]
     }
 
     #[cfg(test)]
-    pub fn from_array([x, y, z, w]: [f32; 4]) -> Self {
+    pub fn from_array([x, y, z, w]: [f64; 4]) -> Self {
         Self { x, y, z, w }
     }
 }
@@ -182,9 +182,9 @@ impl ops::Add for Vector4 {
     }
 }
 
-impl ops::Mul<f32> for Vector4 {
+impl ops::Mul<f64> for Vector4 {
     type Output = Vector4;
-    fn mul(mut self, rhs: f32) -> Self::Output {
+    fn mul(mut self, rhs: f64) -> Self::Output {
         self.multiply(rhs);
         self
     }
@@ -202,9 +202,9 @@ impl Matrix3 {
     #[rustfmt::skip]
     #[allow(clippy::too_many_arguments)]
     pub fn new(
-        c0r0: f32, c0r1: f32, c0r2: f32,
-        c1r0: f32, c1r1: f32, c1r2: f32,
-        c2r0: f32, c2r1: f32, c2r2: f32,
+        c0r0: f64, c0r1: f64, c0r2: f64,
+        c1r0: f64, c1r1: f64, c1r2: f64,
+        c2r0: f64, c2r1: f64, c2r2: f64,
     ) -> Matrix3 {
         Matrix3 {
             x: Vector3::new(c0r0, c0r1, c0r2),
@@ -213,13 +213,13 @@ impl Matrix3 {
         }
     }
 
-    pub fn determinant(&self) -> f32 {
+    pub fn determinant(&self) -> f64 {
         self.x.x * (self.y.y * self.z.z - self.z.y * self.y.z)
             - self.y.x * (self.x.y * self.z.z - self.z.y * self.x.z)
             + self.z.x * (self.x.y * self.y.z - self.y.y * self.x.z)
     }
 
-    pub fn trace(&self) -> f32 {
+    pub fn trace(&self) -> f64 {
         self.x.x + self.y.y + self.z.z
     }
 }
@@ -237,10 +237,10 @@ impl Matrix4 {
     #[rustfmt::skip]
     #[allow(clippy::too_many_arguments)]
     pub fn new(
-        c0r0: f32, c0r1: f32, c0r2: f32, c0r3: f32,
-        c1r0: f32, c1r1: f32, c1r2: f32, c1r3: f32,
-        c2r0: f32, c2r1: f32, c2r2: f32, c2r3: f32,
-        c3r0: f32, c3r1: f32, c3r2: f32, c3r3: f32,
+        c0r0: f64, c0r1: f64, c0r2: f64, c0r3: f64,
+        c1r0: f64, c1r1: f64, c1r2: f64, c1r3: f64,
+        c2r0: f64, c2r1: f64, c2r2: f64, c2r3: f64,
+        c3r0: f64, c3r1: f64, c3r2: f64, c3r3: f64,
     ) -> Matrix4 {
         Matrix4 {
             x: Vector4::new(c0r0, c0r1, c0r2, c0r3),
@@ -251,7 +251,7 @@ impl Matrix4 {
     }
 
     #[cfg(test)]
-    pub fn from_array([x, y, z, w]: [[f32; 4]; 4]) -> Matrix4 {
+    pub fn from_array([x, y, z, w]: [[f64; 4]; 4]) -> Matrix4 {
         Matrix4 {
             x: Vector4::from_array(x),
             y: Vector4::from_array(y),
@@ -273,7 +273,7 @@ impl Matrix4 {
 
     /// Create a homogeneous transformation matrix from a set of scale values.
     #[rustfmt::skip]
-    pub fn from_nonuniform_scale(x: f32, y: f32, z: f32) -> Matrix4 {
+    pub fn from_nonuniform_scale(x: f64, y: f64, z: f64) -> Matrix4 {
         Matrix4::new(
               x, 0.0, 0.0, 0.0,
             0.0,   y, 0.0, 0.0,
@@ -308,7 +308,7 @@ impl Matrix4 {
         }
     }
 
-    pub fn as_array(&self) -> [[f32; 4]; 4] {
+    pub fn as_array(&self) -> [[f64; 4]; 4] {
         [
             self.x.as_array(),
             self.y.as_array(),
@@ -337,12 +337,12 @@ impl ops::Mul<Matrix4> for Matrix4 {
 #[derive(Copy, Clone, Debug, PartialEq)]
 #[repr(C)]
 pub struct Quaternion {
-    pub s: f32,
+    pub s: f64,
     pub v: Vector3,
 }
 
 impl Quaternion {
-    pub fn new(w: f32, xi: f32, yj: f32, zk: f32) -> Quaternion {
+    pub fn new(w: f64, xi: f64, yj: f64, zk: f64) -> Quaternion {
         Quaternion {
             s: w,
             v: Vector3::new(xi, yj, zk),
@@ -350,7 +350,7 @@ impl Quaternion {
     }
 
     #[cfg(test)]
-    pub fn from_axis_angle(axis: Vector3, radians: f32) -> Quaternion {
+    pub fn from_axis_angle(axis: Vector3, radians: f64) -> Quaternion {
         Quaternion {
             s: (0.5 * radians).cos(),
             v: axis * (0.5 * radians).sin(),

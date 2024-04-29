@@ -229,6 +229,10 @@ impl Validate for f32 {}
 impl Validate for [f32; 3] {}
 impl Validate for [f32; 4] {}
 impl Validate for [f32; 16] {}
+impl Validate for f64 {}
+impl Validate for [f64; 3] {}
+impl Validate for [f64; 4] {}
+impl Validate for [f64; 16] {}
 impl Validate for () {}
 impl Validate for String {}
 impl Validate for serde_json::Value {}
